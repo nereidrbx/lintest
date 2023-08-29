@@ -17,6 +17,19 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scrip
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/Bypasses.lua", true))()
 
 local ScreenGui = Instance.new('ScreenGui');
+local charset = {}
+for i = 48,  57 do table.insert(charset, string.char(i)) end
+for i = 65,  90 do table.insert(charset, string.char(i)) end
+for i = 97, 122 do table.insert(charset, string.char(i)) end
+function RandomCharacters(length)
+    if length > 0 then
+        return RandomCharacters(length - 1) .. charset[math.random(1, #charset)]
+    else
+        return ""
+    end
+end
+
+ScreenGui.Name = RandomCharacters(math.random(5, 20))
 --ProtectGui(ScreenGui);
 
 --ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
@@ -24,10 +37,12 @@ local ScreenGui = Instance.new('ScreenGui');
 
 if gethui then
     ScreenGui.Parent = gethui();
+    print("hui")
 elseif syn and syn.protect_gui then
     syn.protect_gui(Bypassed_Dex);
     ScreenGui.Parent = cloneref(game:GetService("CoreGui"))
 else
+    print("no")
     ScreenGui.Parent = cloneref(game:GetService("CoreGui"))
 end
 
